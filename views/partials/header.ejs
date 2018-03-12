@@ -21,9 +21,13 @@
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="#">Login</a></li>
-	        <li><a href="#">Sign Up</a></li>
-	        <li><a href="#">Logout</a></li>
+	      	<% if(!currentUser) { %>
+	      		<li><a href="/login">Login</a></li>
+	        	<li><a href="/register">Sign Up</a></li>
+	      	<% } else { %>
+	      		<li><a href="#">Signed In As <%= currentUser.username %></a></li>
+	      		<li><a href="/logout">Logout</a></li>
+	      	<% } %>
 	      </ul>
 	    </div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
