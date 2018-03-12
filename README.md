@@ -25,3 +25,4 @@
 - Passport
 		- Passport Local
 		- Passport Local Mongoose
+- Method Override

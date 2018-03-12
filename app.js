@@ -3,6 +3,7 @@ var express 		= require("express"),
 	mongoose 		= require("mongoose"),
 	passport		= require("passport"),
 	LocalStrategy	= require("passport-local"),
+	methodOverride	= require("method-override"),
 	app 			= express(),
 	Campground 		= require("./models/campground"),
 	Comment 		= require("./models/comment"),
@@ -19,6 +20,7 @@ mongoose.connect("mongodb://localhost/yelp_camp");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 
 app.use(require("express-session")({
 	secret: "Once again Rusty wins cutest dog.",

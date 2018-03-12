@@ -14,11 +14,15 @@ router.get("/", function(req, res) {
 });
 
 //Create Route
-router.post("/", function(req, res) {
+router.post("/", isLoggedIn, function(req, res) {
 	var name = req.body.name;
 	var desc = req.body.description;
 	var image = req.body.image;
-	var newCampground = {name: name, description: desc, image: image};
+	var author = {
+		id: req.user._id,
+		username: req.user.username
+	};
+	var newCampground = {name: name, description: desc, image: image, author:author};
 
 	Campground.create(newCampground, function(err, newlyCreated) {
 		if(err) {
@@ -30,7 +34,7 @@ router.post("/", function(req, res) {
 });
 
 //New Route
-router.get("/new", function(req, res) {
+router.get("/new", isLoggedIn, function(req, res) {
 	res.render("campgrounds/new.ejs");
 });
 
@@ -44,5 +48,46 @@ router.get("/:id", function(req, res) {
 		}
 	});
 });
+
+//Edit Route
+router.get("/:id/edit", function(req, res) {
+	Campground.findById(req.params.id, function(err, foundCampground) {
+		if(err) {
+			res.redirect("/campgrounds");
+		} else {
+			res.render("campgrounds/edit", {campground: foundCampground});
+		}
+	});
+});
+
+//Update Route
+router.put("/:id", function(req, res) {
+	Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, updatedCampground) {
+		if(err) {
+			res.redirect("/campgrounds");
+		} else {
+			res.redirect("/campgrounds/" + req.params.id);
+		}
+	});
+});
+
+//Destroy Route
+router.delete("/:id", function(req, res) {
+	Campground.findByIdAndRemove(req.params.id, function(err) {
+		if(err) {
+			res.redirect("/campgrounds");
+		} else {
+			res.redirect("/campgrounds");
+		}
+	});
+});
+
+function isLoggedIn(req, res, next) {
+	if(req.isAuthenticated()) {
+		return next();
+	} else {
+		res.render("login");
+	}
+}
 
 module.exports = router;
