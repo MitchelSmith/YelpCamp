@@ -3,7 +3,9 @@
 
 #### Features:
 - View different campgrounds
-- Add campgrounds
+- Add/Edit/Delete campgrounds
+- Add/Edit/Delete comments
+- Create account
 - Review campgrounds
 
 ## Uses:
@@ -25,4 +27,6 @@
 - Passport
 		- Passport Local
 		- Passport Local Mongoose
+- Connect Flash
 - Method Override
+- Moment
